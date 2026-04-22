@@ -63,19 +63,19 @@ export default function ProfilePage() {
     if (file) {
       if (type === "profile") {
         if (!file.type.startsWith("image/")) {
-          toast.error("กรุณาอัปโหลดไฟล์รูปภาพเท่านั้น");
+          toast.error("Please upload image file only");
           return;
         }
       } else {
         if (file.type !== "application/pdf") {
-          toast.error("กรุณาอัปโหลดไฟล์ PDF เท่านั้น");
+          toast.error("Please upload PDF file only");
           return;
         }
       }
       const fileName = file.name;
       setProfile((prev) => ({ ...prev, [type]: fileName }));
       toast.success(
-        `อัปโหลด${type === "resume" ? "Resume" : type === "transcript" ? "Transcript" : type === "report" ? "Report" : "รูปโปรไฟล์"}สำเร็จ`,
+        `Upload ${type === "resume" ? "Resume" : type === "transcript" ? "Transcript" : type === "report" ? "Report" : "Profile"} successfully`,
       );
     }
   };
@@ -106,7 +106,7 @@ export default function ProfilePage() {
           preferredPrograms: [...editForm.preferredPrograms, program],
         });
       } else {
-        toast.warning("สามารถเลือกได้สูงสุด 3 รายการ");
+        toast.warning("You can select up to 3 items");
       }
     }
   };
@@ -116,28 +116,28 @@ export default function ProfilePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
-          <p className="text-muted-foreground mt-1 font-thai">
-            ข้อมูลส่วนตัวและการฝึกงาน
+          <p className="text-muted-foreground mt-1">
+            Personal and internship information
           </p>
         </div>
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
           <DialogTrigger
             render={
               <Button
-                className="cursor-pointer font-thai"
+                className="cursor-pointer"
                 onClick={handleEditClick}
               >
                 <Pencil className="mr-2 size-4" />
-                แก้ไขโปรไฟล์
+                Edit Profile
               </Button>
             }
           />
 
           <DialogContent className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle className="font-thai">แก้ไขโปรไฟล์</DialogTitle>
-              <DialogDescription className="font-thai">
-                อัปเดตข้อมูลโปรไฟล์ของคุณ
+              <DialogTitle>Edit Profile</DialogTitle>
+              <DialogDescription>
+                Update your profile information
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-6 py-4">
@@ -709,13 +709,13 @@ export default function ProfilePage() {
             <DialogFooter>
               <DialogClose
                 render={
-                  <Button variant="outline" className="font-thai">
-                    ยกเลิก
+                  <Button variant="outline">
+                    Cancel
                   </Button>
                 }
               />
-              <Button onClick={handleSave} className="font-thai">
-                บันทึก
+              <Button onClick={handleSave}>
+                Save
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -748,11 +748,10 @@ export default function ProfilePage() {
             <Button
               variant="outline"
               size="sm"
-              className="font-thai"
               onClick={() => profileInputRef.current?.click()}
             >
               <Upload className="mr-2 size-4" />
-              อัปโหลดรูป
+              Upload
             </Button>
           </CardContent>
         </Card>
@@ -834,12 +833,9 @@ export default function ProfilePage() {
       </div>
 
       <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
-        <Card>
+<Card>
           <CardHeader>
-            <CardTitle className="font-thai flex items-center gap-2">
-              <Contact className="size-5" />
-              ข้อมูลการติดต่อ
-            </CardTitle>
+            <CardTitle className="text-lg">Profile Picture</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
@@ -1047,9 +1043,9 @@ export default function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-thai flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <FileText className="size-5" />
-            เอกสาร
+            Documents
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -1080,12 +1076,12 @@ export default function ProfilePage() {
           >
             <DialogContent className="max-w-3xl h-[80vh]">
               <DialogHeader>
-                <DialogTitle className="font-thai">
+                <DialogTitle>
                   Preview: {previewFile?.name}
                 </DialogTitle>
               </DialogHeader>
               <div className="flex-1 w-full h-full bg-muted rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground font-thai">
+                <p className="text-muted-foreground">
                   Preview PDF: {previewFile?.name}
                 </p>
               </div>
@@ -1098,14 +1094,14 @@ export default function ProfilePage() {
                 <FileText className="size-4 text-muted-foreground" />
               </div>
               <p className="text-sm text-muted-foreground truncate">
-                {profile.resume || "ยังไม่ได้อัปโหลด"}
+                {profile.resume || "Not uploaded"}
               </p>
               <div className="flex gap-2">
                 {profile.resume && (
                   <Button
                     variant="outline"
                     size="sm"
-                    className="font-thai flex-1"
+                    className="flex-1"
                     onClick={() =>
                       setPreviewFile({ type: "resume", name: profile.resume! })
                     }
@@ -1116,28 +1112,28 @@ export default function ProfilePage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="font-thai flex-1"
+                  className="flex-1"
                   onClick={() => resumeInputRef.current?.click()}
                 >
                   <Upload className="size-4 mr-1" />
-                  {profile.resume ? "ใหม่" : "อัปโหลด"}
+                  {profile.resume ? "New" : "Upload"}
                 </Button>
               </div>
             </div>
             <div className="flex flex-col gap-2 p-4 border rounded-lg">
               <div className="flex items-center justify-between">
-                <p className="font-medium font-thai">Transcript</p>
+                <p className="font-medium">Transcript</p>
                 <FileText className="size-4 text-muted-foreground" />
               </div>
               <p className="text-sm text-muted-foreground truncate">
-                {profile.transcript || "ยังไม่ได้อัปโหลด"}
+                {profile.transcript || "Not uploaded"}
               </p>
               <div className="flex gap-2">
                 {profile.transcript && (
                   <Button
                     variant="outline"
                     size="sm"
-                    className="font-thai flex-1"
+                    className="flex-1"
                     onClick={() =>
                       setPreviewFile({
                         type: "transcript",
@@ -1151,28 +1147,28 @@ export default function ProfilePage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="font-thai flex-1"
+                  className="flex-1"
                   onClick={() => transcriptInputRef.current?.click()}
                 >
                   <Upload className="size-4 mr-1" />
-                  {profile.transcript ? "ใหม่" : "อัปโหลด"}
+                  {profile.transcript ? "New" : "Upload"}
                 </Button>
               </div>
             </div>
             <div className="flex flex-col gap-2 p-4 border rounded-lg">
               <div className="flex items-center justify-between">
-                <p className="font-medium font-thai">Report (ถ้ามี)</p>
+                <p className="font-medium">Report (if any)</p>
                 <FileText className="size-4 text-muted-foreground" />
               </div>
               <p className="text-sm text-muted-foreground truncate">
-                {profile.report || "ยังไม่ได้อัปโหลด"}
+                {profile.report || "Not uploaded"}
               </p>
               <div className="flex gap-2">
                 {profile.report && (
                   <Button
                     variant="outline"
                     size="sm"
-                    className="font-thai flex-1"
+                    className="flex-1"
                     onClick={() =>
                       setPreviewFile({ type: "report", name: profile.report! })
                     }
@@ -1183,11 +1179,11 @@ export default function ProfilePage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="font-thai flex-1"
+                  className="flex-1"
                   onClick={() => reportInputRef.current?.click()}
                 >
                   <Upload className="size-4 mr-1" />
-                  {profile.report ? "ใหม่" : "อัปโหลด"}
+                  {profile.report ? "New" : "Upload"}
                 </Button>
               </div>
             </div>
